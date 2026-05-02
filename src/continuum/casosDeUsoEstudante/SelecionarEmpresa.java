@@ -29,7 +29,7 @@ public class SelecionarEmpresa {
             }
 
             System.out.println("Id invalido! Tente novamente com um id valido");
-            System.out.println("(Digite 0 para sair da selecao de empresas!)");
+            System.out.println("(Digite 0 para sair da selecao de empresas)");
 
         }while(idEmpresaEntrada != Constantes.OPCAO_SAIR_SELECAO_EMPRESAS);
 
