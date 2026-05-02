@@ -22,13 +22,16 @@ public class BdMock {
         String nome = sc.nextLine();
         System.out.println("CPF do doador: ");
         String cpf = sc.nextLine();
+        System.out.println("Senha: ");
+        String senha = sc.nextLine();
+
         System.out.println("Telefone: ");
         String telefone = sc.nextLine();
         System.out.println("CEP: ");
         String cep = sc.nextLine();
         System.out.println("numero de endereco: ");
         String numeroEndereco = sc.nextLine();
-        doadorBd = new Doador(cpf, cep, nome, telefone, numeroEndereco);
+        doadorBd = new Doador(cpf, cep, nome, telefone, numeroEndereco, senha);
 
     }
 
