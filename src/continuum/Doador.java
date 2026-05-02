@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Doador {
+    private static int contadorId = 0;
     private String cpf;
     private String cep;
     private String nome;
@@ -12,14 +13,22 @@ public class Doador {
     private int numDoacoes;
     private String numeroEndereco;
     private List<Desconto> cupons;
+    private String senha;
 
-    public Doador(String cpf, String cep, String nome, String telefone, String numeroEndereco) {
+    public Doador(
+            String cpf,
+            String cep, 
+            String nome, 
+            String telefone, 
+            String numeroEndereco,
+            String senha) {
         this.cpf = cpf;
         this.cep = cep;
         this.nome = nome;
         this.telefone = telefone;
         this.numDoacoes = 0;
         this.numeroEndereco = numeroEndereco;
+        this.senha = senha;
         this.cupons = new ArrayList<>();
     }
 
@@ -40,7 +49,10 @@ public class Doador {
 
     public String getNumeroEndereco() { return numeroEndereco; }
     public void setNumeroEndereco(String nrEndereco) { this.numeroEndereco = nrEndereco; }
-
+    
+    public String getSenha() { return senha;}
+    public void setSenha(String senha) { this.senha = senha;}
+        
     public List<Desconto> getCupons() { return cupons; }
     
     public void realizarDoacao() {
