@@ -9,7 +9,7 @@ public class ReservarLote {
     boolean estudanteLogado;
     BdMock bd;
     SelecionarEmpresa selecionarEmpresaCasoDeUso;
-    Scanner sc = new Scanner();
+    Scanner sc = new Scanner(System.in);
     
     public ReservarLote(
         boolean estudanteLogado,
