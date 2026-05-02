@@ -16,9 +16,9 @@ public class Continuum {
         
         BdMock bd = new BdMock();
         
-      bd.criarDoador();
-      bd.criarEmpresa();
-      bd.criarEstudante();
+        bd.criarDoador();
+        bd.criarEmpresa();
+        bd.criarEstudante();
 
         do{
             System.out.println("------MENU PARA ESCOLHA------");
@@ -51,15 +51,15 @@ public class Continuum {
                                 estudanteLogado = logarEstudante.executar();
                             }
                             case Constantes.OPCAO_ESTUDANTE_RESERVAR_LOTE ->{
-                                if(!estudanteLogado){
-                                    System.out.println("Estudante deve estar logado para selecionar o lote!");
-                                }
-                                SelecionarEmpresa selecionarEmpresa = new SelecionarEmpresa(estudanteLogado, bd);
-                                int idEmpresaSelecionada = selecionarEmpresa.executar();
+                                SelecionarEmpresa selecionarEmpresaCasoDeUso = new SelecionarEmpresa(estudanteLogado, bd);
                                 
-                                System.out.println("Empresa selecionada: " + idEmpresaSelecionada);
-                                ReservarLote reservarLote = new ReservarLote(estudanteLogado, bd, idEmpresaSelecionada);
-                                reservarLote.executar();
+                                ReservarLote reservarLoteCasoDeUso = new ReservarLote(
+                                        estudanteLogado,
+                                        bd,
+                                        selecionarEmpresaCasoDeUso
+                                );
+                                
+                                reservarLoteCasoDeUso.executar();
                             }
                             default -> {
                                 if(opcao>0)

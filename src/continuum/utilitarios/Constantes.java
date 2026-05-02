@@ -19,4 +19,6 @@ public final class Constantes {
     
     public static final int ID_EMPRESA_INVALIDA = -1;
     public static final int OPCAO_SAIR_SELECAO_EMPRESAS = 0;
+    
+    public static final int ID_LOTE_INVALIDO = -1;
 }

@@ -157,10 +157,13 @@ public class BdMock {
         return estudanteBd;
     }
     
-    public void getLotesCadastrados(){
-        System.out.println("Lotes cadastrados: ");
+    public void getLotesCadastrados(int idEmpresa){
+        System.out.println("Lotes cadastrados para a empresa de ID: " + idEmpresa);
         for (Lote loteAtual : lotesBd){
-            if(loteAtual.getCdStatusLote() == 0){
+            if(
+                loteAtual.getCdStatusLote() == Constantes.CODIGO_LOTE_DISPONIVEL &&
+                loteAtual.getIdEmpresa() == idEmpresa
+            ){
                 System.out.println("--------------------");
                 System.out.println("Numero do lote: " + loteAtual.getNumLote());
                 System.out.println("Empresa responsavel " + loteAtual.getIdEmpresa());
@@ -168,5 +171,13 @@ public class BdMock {
                 System.out.println("Itens do lote: " + loteAtual.getDescItens());
             }
         }
+    }
+    
+    public int getLoteComId(int idLoteSelecionado){
+        for (Lote loteAtual : lotesBd){
+            if(loteAtual.getIdLote() == idLoteSelecionado) return loteAtual.getIdLote();
+        }
+        
+        return Constantes.ID_LOTE_INVALIDO;
     }
 }
