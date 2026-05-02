@@ -100,7 +100,7 @@ public class BdMock {
 
     public void criarLote(int idEmpresa){
         int opcaoCriacaoLote;
-        int statusLoteDisponivel = 0;
+
         do{
               System.out.println("--- CADASTRO DE NOVO LOTE ---");
               
@@ -115,7 +115,7 @@ public class BdMock {
               System.out.println("Insira a descricao dos itens: ");
               String descItens = sc.nextLine();
               
-              Lote novoLote = new Lote(numLote, statusLoteDisponivel, idEmpresa, descItens, pesoLote);
+              Lote novoLote = new Lote(numLote, Constantes.CODIGO_LOTE_DISPONIVEL, idEmpresa, descItens, pesoLote);
               
               lotesBd.add(novoLote);
               
