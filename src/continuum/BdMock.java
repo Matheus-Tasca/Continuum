@@ -1,5 +1,9 @@
 package continuum;
 
+import continuum.endereco.Bairro;
+import continuum.endereco.Cep;
+import continuum.endereco.Cidade;
+import continuum.endereco.Estado;
 import java.util.Scanner;
 import continuum.utilitarios.Constantes;
 import java.util.ArrayList;
@@ -11,11 +15,14 @@ public class BdMock {
     private Estudante estudanteBd;
     private List<Empresa> empresaBd = new ArrayList();
     private List<Lote> lotesBd = new  ArrayList();
-    //TO-DO: Decidir se os status serao um array ou n
-    private StatusLote statusLoteBd;
-    
-    Scanner sc = new Scanner(System.in);
+    private List<Projeto> projetosBd = new ArrayList();
+    private List<Cep> cepsBd = new ArrayList();
+    private List<Bairro> bairrosBd = new ArrayList();
+    private List<Cidade> cidadesBd = new ArrayList();
+    private List<Estado> estadosBd = new ArrayList();
 
+    Scanner sc = new Scanner(System.in);
+    
     public void criarDoador() {
         System.out.println("--- CADASTRO DE DOADOR ---");
         System.out.println("Nome do doador: ");
@@ -31,7 +38,10 @@ public class BdMock {
         String cep = sc.nextLine();
         System.out.println("numero de endereco: ");
         String numeroEndereco = sc.nextLine();
-        doadorBd = new Doador(cpf, cep, nome, telefone, numeroEndereco, senha);
+        System.out.println("Senha: ");
+        String senha = sc.nextLine();
+        
+        doadorBd = new Doador(cpf, cep, nome, telefone, numeroEndereco, senha, senha);
 
     }
 
@@ -51,9 +61,14 @@ public class BdMock {
 
             System.out.println("CEP: ");
             String cep = sc.nextLine();
-
+            
             System.out.println("Número do endereço: ");
             String nrEndereco = sc.nextLine();
+
+            if(!this.pesquisarCep(cep)){
+                System.out.println("CEP nao cadastrado! Iniciando cadastro de endereco");
+                this.criarCidade();
+            }
 
             Empresa novaEmpresa = new Empresa(cnpj, nmFantasia, email, cep, nrEndereco);
             
@@ -95,6 +110,11 @@ public class BdMock {
         System.out.println("Número do endereço: ");
         String nrEndereco = sc.nextLine();
         
+        if(!this.pesquisarCep(cep)){
+            System.out.println("CEP nao cadastrado! Iniciando cadastro de endereco");
+            this.criarCidade();
+        }
+        
         estudanteBd = new Estudante(cpf, nome, ra, cep, nmFaculdade, email, nrEndereco, senha);
 
         System.out.println("Estudante cadastrado com sucesso!");
@@ -103,7 +123,7 @@ public class BdMock {
 
     public void criarLote(int idEmpresa){
         int opcaoCriacaoLote;
-        int statusLoteDisponivel = 0;
+
         do{
               System.out.println("--- CADASTRO DE NOVO LOTE ---");
               
@@ -118,7 +138,7 @@ public class BdMock {
               System.out.println("Insira a descricao dos itens: ");
               String descItens = sc.nextLine();
               
-              Lote novoLote = new Lote(numLote, statusLoteDisponivel, idEmpresa, descItens, pesoLote);
+              Lote novoLote = new Lote(numLote, Constantes.CODIGO_STATUS_LOTE_DISPONIVEL, idEmpresa, descItens, pesoLote);
               
               lotesBd.add(novoLote);
               
@@ -128,6 +148,87 @@ public class BdMock {
               System.out.println("1 - SIM | 2 - NAO");
               opcaoCriacaoLote= sc.nextInt();
         }while(opcaoCriacaoLote != 2);    
+    }
+    
+    public void criarProjeto(int idLote, String cpfEstudante){
+        Projeto novoProjeto = new Projeto(idLote, cpfEstudante);
+        projetosBd.add(novoProjeto);
+        System.out.println("Projeto " + novoProjeto.getIdProjeto()
+                + " vinculado ao estudante");
+    }
+    
+    public void criarCep(int idBairro){
+        System.out.println("Informe o cep: ");
+        String cep = sc.nextLine();
+        System.out.println("Informe o logradouro: ");
+        String logradouro = sc.nextLine();
+        Cep novoCep = new Cep(cep, logradouro, idBairro);
+        
+        this.cepsBd.add(novoCep);
+        
+        System.out.println("CEP: " + cep + " cadastrado");
+    }
+    
+    public void criarBairro(int idCidade){
+        System.out.println("Informe o nome do bairro: ");
+        String nomeBairro = sc.nextLine();
+        Bairro novoBairro = new Bairro(nomeBairro, idCidade);;
+        bairrosBd.add(novoBairro);
+        this.criarCep(novoBairro.getIdBairro());
+    }
+    
+    public void criarCidade(){
+        int idEstado;
+        do{
+            System.out.println("Informe a sigla do estado da cidade: ");
+            String siglaEstado = sc.nextLine();
+            idEstado = getEstadoComSigla(siglaEstado);
+        
+            if(idEstado != Constantes.ID_ESTADO_INVALIDO){
+                break;
+            }
+            
+            System.out.println("Estado invalido!");
+        }while(idEstado == Constantes.ID_ESTADO_INVALIDO);
+        
+        
+        System.out.println("Informe o nome da cidade: ");
+        String nomeCidade = sc.nextLine();
+        Cidade novaCidade = new Cidade(nomeCidade,idEstado);
+        cidadesBd.add(novaCidade);
+        System.out.println("Cidade cadastrada! ");
+        this.criarBairro(novaCidade.getIdCidade());
+        
+    }
+    
+    public void criarEstados(){
+        estadosBd.add(new Estado("Acre", "AC"));
+        estadosBd.add(new Estado("Alagoas", "AL"));
+        estadosBd.add(new Estado("Amapa", "AP"));
+        estadosBd.add(new Estado("Amazonas", "AM"));
+        estadosBd.add(new Estado("Bahia", "BA"));
+        estadosBd.add(new Estado("Ceara", "CE"));
+        estadosBd.add(new Estado("Distrito Federal", "DF"));
+        estadosBd.add(new Estado("Espirito Santo", "ES"));
+        estadosBd.add(new Estado("Goias", "GO"));
+        estadosBd.add(new Estado("Maranhao", "MA"));
+        estadosBd.add(new Estado("Mato Grosso", "MT"));
+        estadosBd.add(new Estado("Mato Grosso do Sul", "MS"));
+        estadosBd.add(new Estado("Minas Gerais", "MG"));
+        estadosBd.add(new Estado("Para", "PA"));
+        estadosBd.add(new Estado("Paraiba", "PB"));
+        estadosBd.add(new Estado("Parana", "PR"));
+        estadosBd.add(new Estado("Pernambuco", "PE"));
+        estadosBd.add(new Estado("Piaui", "PI"));
+        estadosBd.add(new Estado("Rio de Janeiro", "RJ"));
+        estadosBd.add(new Estado("Rio Grande do Norte", "RN"));
+        estadosBd.add(new Estado("Rio Grande do Sul", "RS"));
+        estadosBd.add(new Estado("Rondonia", "RO"));
+        estadosBd.add(new Estado("Roraima", "RR"));
+        estadosBd.add(new Estado("Santa Catarina", "SC"));
+        estadosBd.add(new Estado("Sao Paulo", "SP"));
+        estadosBd.add(new Estado("Sergipe", "SE"));
+        estadosBd.add(new Estado("Tocantins", "TO"));
     }
     
     public void getEmpresasCadastradas() {
@@ -142,7 +243,7 @@ public class BdMock {
         }
     }
     
-    public int getEmpresaComId(int idEmpresaSelecionada){
+    public int pesquisaIdEmpresa(int idEmpresaSelecionada){
         
         for (Empresa empresaAtual : empresaBd){
             if(empresaAtual.getIdEmpresa() == idEmpresaSelecionada)
@@ -152,6 +253,39 @@ public class BdMock {
         return Constantes.ID_EMPRESA_INVALIDA;
     }
 
+    public Empresa getEmpresaComId(int idEmpresaSelecionada){
+        Empresa empresaSelecionada = null;
+        
+        for (Empresa empresaAtual : empresaBd){
+            if(empresaAtual.getIdEmpresa() == idEmpresaSelecionada)
+               empresaSelecionada = empresaAtual;
+        }
+        
+        return empresaSelecionada;
+    }
+    
+    public Lote getLoteComId(int idLoteSelecionado){
+        Lote loteSelecionado = null;
+        
+        for (Lote loteAtual : lotesBd){
+            if(loteAtual.getIdLote() == idLoteSelecionado)
+               loteSelecionado = loteAtual;
+        }
+        
+        return loteSelecionado;
+    }
+    
+    public Projeto getProjetoComId(int idProjeto){
+        Projeto projeto = null;
+        
+        for (Projeto projetoAtual : projetosBd){
+            if(projetoAtual.getIdProjeto() == idProjeto)
+               projeto = projetoAtual;
+        }
+        
+        return projeto;
+    }
+    
     public Doador getDoadorBd() {
         return doadorBd;
     }
@@ -160,16 +294,96 @@ public class BdMock {
         return estudanteBd;
     }
     
-    public void getLotesCadastrados(){
-        System.out.println("Lotes cadastrados: ");
+    public void getLotesCadastrados(int idEmpresa){
+        System.out.println("Lotes cadastrados para a empresa de ID: " + idEmpresa);
         for (Lote loteAtual : lotesBd){
-            if(loteAtual.getCdStatusLote() == 0){
+            if(
+                loteAtual.getCdStatusLote() == Constantes.CODIGO_STATUS_LOTE_DISPONIVEL &&
+                loteAtual.getIdEmpresa() == idEmpresa
+            ){
                 System.out.println("--------------------");
+                System.out.println("ID do lote: " + loteAtual.getIdLote());
                 System.out.println("Numero do lote: " + loteAtual.getNumLote());
-                System.out.println("Empresa responsavel " + loteAtual.getIdEmpresa());
                 System.out.println("Peso do lote: " + loteAtual.getPesoLote());
                 System.out.println("Itens do lote: " + loteAtual.getDescItens());
             }
         }
     }
+    
+    public int pesquisaLoteId(int idLoteSelecionado){
+        for (Lote loteAtual : lotesBd){
+            if(loteAtual.getIdLote() == idLoteSelecionado) return loteAtual.getIdLote();
+        }
+        
+        return Constantes.ID_LOTE_INVALIDO;
+    }
+    
+    public boolean pesquisarCep(String cepPesquisado){
+        for(Cep cepAtual : cepsBd){
+           if(cepAtual.getCep().trim().equalsIgnoreCase(cepPesquisado.trim())) return true;
+        }
+        
+        return false;
+    }
+    
+    public int getEstadoComSigla(String siglaEstado){
+        for(Estado estadoAtual : estadosBd){
+            if(estadoAtual.getSgEstado().trim().equalsIgnoreCase(siglaEstado.trim()))
+                return estadoAtual.getIdEstado();
+        }
+        return Constantes.ID_ESTADO_INVALIDO;
+    }
+    
+    public void getEnderecoCompleto(String cep) {
+    
+        Cep cepEndereco = null;
+        Bairro bairroEndereco = null;
+        Cidade cidadeEndereco = null;
+        Estado estadoEndereco = null;
+
+        for (Cep cepAtual : cepsBd) {
+            if (cepAtual.getCep().trim().equalsIgnoreCase(cep.trim())) {
+                cepEndereco = cepAtual;
+                break;
+            }
+        }
+
+        if (cepEndereco != null) {
+
+            for (Bairro bairroAtual : bairrosBd) {
+                if (cepEndereco.getIdBairro() == bairroAtual.getIdBairro()) {
+                    bairroEndereco = bairroAtual;
+                    break;
+                }
+            }
+
+            if (bairroEndereco != null) {
+                for (Cidade cidadeAtual : cidadesBd) {
+                    if (bairroEndereco.getIdCidade() == cidadeAtual.getIdCidade()) {
+                        cidadeEndereco = cidadeAtual;
+                        break;
+                    }
+                }
+            }
+
+            if (cidadeEndereco != null) {
+                for (Estado estadoAtual : estadosBd) {
+                    if (cidadeEndereco.getIdEstado() == estadoAtual.getIdEstado()) {
+                        estadoEndereco = estadoAtual;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (estadoEndereco != null) {
+            System.out.println("Endereco: " + bairroEndereco.getNmBairro() + 
+                               ", " + cidadeEndereco.getNmCidade() + 
+                               " - " + estadoEndereco.getSgEstado());
+        } else {
+            System.out.println("CEP nao encontrado ou cadastro incompleto.");
+        }
+    }
+    
+
 }

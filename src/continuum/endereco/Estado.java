@@ -1,12 +1,14 @@
 package continuum.endereco;
 
 public class Estado {
+    private static int contadorId = 0;
     private int idEstado;
     private String nmEstado;
     private String sgEstado;
 
-    public Estado(int idEstado, String nmEstado, String sgEstado) {
-        this.idEstado = idEstado;
+    public Estado(String nmEstado, String sgEstado) {
+        contadorId++;
+        this.idEstado = contadorId;
         this.nmEstado = nmEstado;
         this.sgEstado = sgEstado;
     }

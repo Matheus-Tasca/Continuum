@@ -1,20 +1,23 @@
 package continuum;
 
+import continuum.utilitarios.Constantes;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Projetos {
+public class Projeto {
+    private static int contadorId = 0;
     private int idProjeto;
     private int idLote;
     private String cpfEstudante;
     private int cdStatusProjeto;
     private Date dataEncerramento;
 
-    public Projetos(int idProjeto, int idLote, String cpfEstudante, int cdStatusProjeto) {
-        this.idProjeto = idProjeto;
+    public Projeto(int idLote, String cpfEstudante) {
+        contadorId++;
+        this.idProjeto = contadorId;
         this.idLote = idLote;
         this.cpfEstudante = cpfEstudante;
-        this.cdStatusProjeto = cdStatusProjeto;
+        this.cdStatusProjeto = Constantes.CODIGO_STATUS_PROJETO_INICIADO;
     }
 
     public int getIdProjeto() { return idProjeto; }

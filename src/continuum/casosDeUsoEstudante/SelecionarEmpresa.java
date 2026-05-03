@@ -22,16 +22,16 @@ public class SelecionarEmpresa {
             bd.getEmpresasCadastradas();
             System.out.println("Digite o id da empresa que deseja selecionar: ");
             idEmpresaEntrada = sc.nextInt();
-            idEmpresaSelecionada = bd.getEmpresaComId(idEmpresaEntrada);
+            idEmpresaSelecionada = bd.pesquisaIdEmpresa(idEmpresaEntrada);
 
-            if(idEmpresaSelecionada != Constantes.ID_EMPRESA_INVALIDA){
+            if(idEmpresaSelecionada != Constantes.ID_EMPRESA_INVALIDA && bd.getEmpresaComId(idEmpresaSelecionada) != null){
                 break;
             }
 
             System.out.println("Id invalido! Tente novamente com um id valido");
             System.out.println("(Digite 0 para sair da selecao de empresas)");
 
-        }while(idEmpresaEntrada != Constantes.OPCAO_SAIR_SELECAO_EMPRESAS);
+        }while(idEmpresaEntrada != Constantes.OPCAO_SAIR);
 
         return idEmpresaSelecionada;
     } 
