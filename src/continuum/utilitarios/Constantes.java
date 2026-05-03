@@ -18,18 +18,25 @@ public final class Constantes {
     public static final boolean USUARIO_LOGADO = true;
     
     public static final int ID_EMPRESA_INVALIDA = -1;
-    public static final int OPCAO_SAIR_SELECAO_EMPRESAS = 0;
     
     public static final int ID_LOTE_INVALIDO = -1;
     
     public static final int ID_ESTADO_INVALIDO = -1;
     
-    public static final int CODIGO_LOTE_DISPONIVEL = 0;
-    
-    public static final int CODIGO_PROJETO_INICIADO = 0;
-    
     public static final int OPCAO_ENVIO = 1;
     public static final int OPCAO_RETIRADA = 2;
     
-
+    public static final int CODIGO_STATUS_LOTE_DISPONIVEL = 0;
+    public static final int CODIGO_STATUS_LOTE_EM_PREPARO = 1;
+    public static final int CODIGO_STATUS_LOTE_TRANSPORTE_ESTILISTA = 2;
+    public static final int CODIGO_STATUS_LOTE_RECEBIDO_ESTILISTA = 3;
+    public static final int CODIGO_STATUS_LOTE_TRANSPORTE_LOJA = 4;
+    public static final int CODIGO_STATUS_LOTE_RECEBIDO_LOJA = 5;
+    public static final int CODIGO_STATUS_LOTE_RESERVADO = 6;
+    public static final int CODIGO_STATUS_LOTE_AGUARDANDO_ENVIO = 7;
+    
+    public static final int CODIGO_STATUS_PROJETO_INICIADO = 0;
+    public static final int CODIGO_STATUS_PROJETO_EM_PROCESSO = 1;
+    public static final int CODIGO_STATUS_PROJETO_RECLAMACAO_ABERTA = 2;
+    public static final int CODIGO_STATUS_PROJETO_FINALIZADO = 3;
 }

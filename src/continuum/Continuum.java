@@ -58,7 +58,8 @@ public class Continuum {
                                         estudanteLogado,
                                         bd,
                                         selecionarEmpresaCasoDeUso,
-                                        bd.getEstudanteBd().getCpf()
+                                        bd.getEstudanteBd().getCpf(),
+                                        bd.getEstudanteBd().getCep()
                                 );
                                 
                                 reservarLoteCasoDeUso.executar();

@@ -17,7 +17,7 @@ public class Projeto {
         this.idProjeto = contadorId;
         this.idLote = idLote;
         this.cpfEstudante = cpfEstudante;
-        this.cdStatusProjeto = Constantes.CODIGO_PROJETO_INICIADO;
+        this.cdStatusProjeto = Constantes.CODIGO_STATUS_PROJETO_INICIADO;
     }
 
     public int getIdProjeto() { return idProjeto; }

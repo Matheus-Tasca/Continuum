@@ -104,6 +104,11 @@ public class BdMock {
         System.out.println("Número do endereço: ");
         String nrEndereco = sc.nextLine();
         
+        if(!this.pesquisarCep(cep)){
+            System.out.println("CEP nao cadastrado! Iniciando cadastro de endereco");
+            this.criarCidade();
+        }
+        
         estudanteBd = new Estudante(cpf, nome, ra, cep, nmFaculdade, email, nrEndereco, senha);
 
         System.out.println("Estudante cadastrado com sucesso!");
@@ -127,7 +132,7 @@ public class BdMock {
               System.out.println("Insira a descricao dos itens: ");
               String descItens = sc.nextLine();
               
-              Lote novoLote = new Lote(numLote, Constantes.CODIGO_LOTE_DISPONIVEL, idEmpresa, descItens, pesoLote);
+              Lote novoLote = new Lote(numLote, Constantes.CODIGO_STATUS_LOTE_DISPONIVEL, idEmpresa, descItens, pesoLote);
               
               lotesBd.add(novoLote);
               
@@ -162,19 +167,24 @@ public class BdMock {
         System.out.println("Informe o nome do bairro: ");
         String nomeBairro = sc.nextLine();
         Bairro novoBairro = new Bairro(nomeBairro, idCidade);;
+        bairrosBd.add(novoBairro);
         this.criarCep(novoBairro.getIdBairro());
     }
     
     public void criarCidade(){
-        System.out.println("Informe a sigla do estado da cidade: ");
-        String siglaEstado = sc.nextLine();
-        System.out.println("sigla: " + siglaEstado);
-        int idEstado = getEstadoComSigla(siglaEstado);
+        int idEstado;
+        do{
+            System.out.println("Informe a sigla do estado da cidade: ");
+            String siglaEstado = sc.nextLine();
+            idEstado = getEstadoComSigla(siglaEstado);
         
-        if(idEstado == Constantes.ID_ESTADO_INVALIDO){
+            if(idEstado != Constantes.ID_ESTADO_INVALIDO){
+                break;
+            }
+            
             System.out.println("Estado invalido!");
-            return;
-        }
+        }while(idEstado == Constantes.ID_ESTADO_INVALIDO);
+        
         
         System.out.println("Informe o nome da cidade: ");
         String nomeCidade = sc.nextLine();
@@ -227,7 +237,7 @@ public class BdMock {
         }
     }
     
-    public int getEmpresaComId(int idEmpresaSelecionada){
+    public int pesquisaIdEmpresa(int idEmpresaSelecionada){
         
         for (Empresa empresaAtual : empresaBd){
             if(empresaAtual.getIdEmpresa() == idEmpresaSelecionada)
@@ -237,6 +247,39 @@ public class BdMock {
         return Constantes.ID_EMPRESA_INVALIDA;
     }
 
+    public Empresa getEmpresaComId(int idEmpresaSelecionada){
+        Empresa empresaSelecionada = null;
+        
+        for (Empresa empresaAtual : empresaBd){
+            if(empresaAtual.getIdEmpresa() == idEmpresaSelecionada)
+               empresaSelecionada = empresaAtual;
+        }
+        
+        return empresaSelecionada;
+    }
+    
+    public Lote getLoteComId(int idLoteSelecionado){
+        Lote loteSelecionado = null;
+        
+        for (Lote loteAtual : lotesBd){
+            if(loteAtual.getIdLote() == idLoteSelecionado)
+               loteSelecionado = loteAtual;
+        }
+        
+        return loteSelecionado;
+    }
+    
+    public Projeto getProjetoComId(int idProjeto){
+        Projeto projeto = null;
+        
+        for (Projeto projetoAtual : projetosBd){
+            if(projetoAtual.getIdProjeto() == idProjeto)
+               projeto = projetoAtual;
+        }
+        
+        return projeto;
+    }
+    
     public Doador getDoadorBd() {
         return doadorBd;
     }
@@ -249,7 +292,7 @@ public class BdMock {
         System.out.println("Lotes cadastrados para a empresa de ID: " + idEmpresa);
         for (Lote loteAtual : lotesBd){
             if(
-                loteAtual.getCdStatusLote() == Constantes.CODIGO_LOTE_DISPONIVEL &&
+                loteAtual.getCdStatusLote() == Constantes.CODIGO_STATUS_LOTE_DISPONIVEL &&
                 loteAtual.getIdEmpresa() == idEmpresa
             ){
                 System.out.println("--------------------");
@@ -261,7 +304,7 @@ public class BdMock {
         }
     }
     
-    public int getLoteComId(int idLoteSelecionado){
+    public int pesquisaLoteId(int idLoteSelecionado){
         for (Lote loteAtual : lotesBd){
             if(loteAtual.getIdLote() == idLoteSelecionado) return loteAtual.getIdLote();
         }
@@ -271,7 +314,7 @@ public class BdMock {
     
     public boolean pesquisarCep(String cepPesquisado){
         for(Cep cepAtual : cepsBd){
-           if(cepAtual.getCep().equals(cepPesquisado)) return true;
+           if(cepAtual.getCep().trim().equalsIgnoreCase(cepPesquisado.trim())) return true;
         }
         
         return false;
@@ -279,10 +322,62 @@ public class BdMock {
     
     public int getEstadoComSigla(String siglaEstado){
         for(Estado estadoAtual : estadosBd){
-            estadoAtual.obterNomeCompleto();
             if(estadoAtual.getSgEstado().trim().equalsIgnoreCase(siglaEstado.trim()))
                 return estadoAtual.getIdEstado();
         }
         return Constantes.ID_ESTADO_INVALIDO;
     }
+    
+    public void getEnderecoCompleto(String cep) {
+    
+        Cep cepEndereco = null;
+        Bairro bairroEndereco = null;
+        Cidade cidadeEndereco = null;
+        Estado estadoEndereco = null;
+
+        for (Cep cepAtual : cepsBd) {
+            if (cepAtual.getCep().trim().equalsIgnoreCase(cep.trim())) {
+                cepEndereco = cepAtual;
+                break;
+            }
+        }
+
+        if (cepEndereco != null) {
+
+            for (Bairro bairroAtual : bairrosBd) {
+                if (cepEndereco.getIdBairro() == bairroAtual.getIdBairro()) {
+                    bairroEndereco = bairroAtual;
+                    break;
+                }
+            }
+
+            if (bairroEndereco != null) {
+                for (Cidade cidadeAtual : cidadesBd) {
+                    if (bairroEndereco.getIdCidade() == cidadeAtual.getIdCidade()) {
+                        cidadeEndereco = cidadeAtual;
+                        break;
+                    }
+                }
+            }
+
+            if (cidadeEndereco != null) {
+                for (Estado estadoAtual : estadosBd) {
+                    if (cidadeEndereco.getIdEstado() == estadoAtual.getIdEstado()) {
+                        estadoEndereco = estadoAtual;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (estadoEndereco != null) {
+            System.out.println("Endereco: " + bairroEndereco.getNmBairro() + 
+                               ", " + cidadeEndereco.getNmCidade() + 
+                               " - " + estadoEndereco.getSgEstado());
+        } else {
+            System.out.println("CEP nao encontrado ou cadastro incompleto.");
+        }
+    }
+    
+
 }
