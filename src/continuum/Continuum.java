@@ -1,6 +1,8 @@
 package continuum;
 
 
+import continuum.casosDeUsoDoador.LogarDoador;
+import continuum.casosDeUsoDoador.VisualizarDoacoes;
 import continuum.casosDeUsoEstudante.LogarEstudante;
 import continuum.casosDeUsoEstudante.ReservarLote;
 import continuum.casosDeUsoEstudante.SelecionarEmpresa;
@@ -51,17 +53,14 @@ public class Continuum {
                             }
                             case Constantes.OPCAO_DOADOR_VISUALIZAR_DESCONTOS -> {
                                 
-                            }
-                            case Constantes.OPCAO_SAIR -> {
-                               System.out.println("Saindo...");
-                            }
-                            default ->{
-                                System.out.println("Opcao invalida!");
+                        }
+                            default -> {
+                                if(opcao>0)
+                                    System.out.println("Opcao invalida");
                             }    
                     }
-                 } while (opcaoDoador != Constantes.OPCAO_SAIR);
-   
-                 }
+                 } while (opcaoDoador !=0);
+                }
                 case Constantes.OPCAO_EMPRESA -> {
 
                  }

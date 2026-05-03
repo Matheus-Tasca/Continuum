@@ -29,6 +29,9 @@ public class BdMock {
         String nome = sc.nextLine();
         System.out.println("CPF do doador: ");
         String cpf = sc.nextLine();
+        System.out.println("Senha: ");
+        String senha = sc.nextLine();
+
         System.out.println("Telefone: ");
         String telefone = sc.nextLine();
         System.out.println("CEP: ");
@@ -38,7 +41,7 @@ public class BdMock {
         System.out.println("Senha: ");
         String senha = sc.nextLine();
         
-        doadorBd = new Doador(cpf, cep, nome, telefone, numeroEndereco, senha);
+        doadorBd = new Doador(cpf, cep, nome, telefone, numeroEndereco, senha, senha);
 
     }
 

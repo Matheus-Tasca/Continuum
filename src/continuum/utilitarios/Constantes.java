@@ -9,7 +9,6 @@ public final class Constantes {
     public static final int OPCAO_DOADOR_LOGAR = 1;
     public static final int OPCAO_DOADOR_VISUALIZAR_DOACAO = 2;
     public static final int OPCAO_DOADOR_VISUALIZAR_DESCONTOS = 3;
-
     
     public static final int OPCAO_EMPRESA = 2;
     
