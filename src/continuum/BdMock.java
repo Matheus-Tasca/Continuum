@@ -35,7 +35,10 @@ public class BdMock {
         String cep = sc.nextLine();
         System.out.println("numero de endereco: ");
         String numeroEndereco = sc.nextLine();
-        doadorBd = new Doador(cpf, cep, nome, telefone, numeroEndereco);
+        System.out.println("Senha: ");
+        String senha = sc.nextLine();
+        
+        doadorBd = new Doador(cpf, cep, nome, telefone, numeroEndereco, senha);
 
     }
 

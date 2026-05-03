@@ -31,7 +31,36 @@ public class Continuum {
             
             switch (opcao) {
                 case Constantes.OPCAO_DOADOR -> {
-
+                    boolean doadorLogado=false;
+                    int opcaoDoador;
+                    do{
+                        System.out.println("----MENU PARA ESCOLHA (DOADOR) ----");
+                        System.out.println("1 - Logar");
+                        System.out.println("2 - Visualizar doacoes");
+                        System.out.println("3 - Visualizar descontos");
+                        opcaoDoador = sc.nextInt();
+                        
+                        switch(opcaoDoador) {
+                            case Constantes.OPCAO_DOADOR_LOGAR ->{
+                                LogarDoador logarDoador = new LogarDoador(bd);
+                                doadorLogado = logarDoador.executar();
+                            }
+                            case Constantes.OPCAO_DOADOR_VISUALIZAR_DOACAO -> {
+                                VisualizarDoacoes visualizarDoacao =  new VisualizarDoacoes(bd.getDoadorBd());
+                                visualizarDoacao.visualizarDoacao();
+                            }
+                            case Constantes.OPCAO_DOADOR_VISUALIZAR_DESCONTOS -> {
+                                
+                            }
+                            case Constantes.OPCAO_SAIR -> {
+                               System.out.println("Saindo...");
+                            }
+                            default ->{
+                                System.out.println("Opcao invalida!");
+                            }    
+                    }
+                 } while (opcaoDoador != Constantes.OPCAO_SAIR);
+   
                  }
                 case Constantes.OPCAO_EMPRESA -> {
 
