@@ -16,7 +16,8 @@ public class Continuum {
         
         BdMock bd = new BdMock();
         
-        bd.criarDoador();
+        bd.criarEstados();
+//        bd.criarDoador();
         bd.criarEmpresa();
         bd.criarEstudante();
 
@@ -52,11 +53,12 @@ public class Continuum {
                             }
                             case Constantes.OPCAO_ESTUDANTE_RESERVAR_LOTE ->{
                                 SelecionarEmpresa selecionarEmpresaCasoDeUso = new SelecionarEmpresa(estudanteLogado, bd);
-                                
+                                bd.criarLote(1);
                                 ReservarLote reservarLoteCasoDeUso = new ReservarLote(
                                         estudanteLogado,
                                         bd,
-                                        selecionarEmpresaCasoDeUso
+                                        selecionarEmpresaCasoDeUso,
+                                        bd.getEstudanteBd().getCpf()
                                 );
                                 
                                 reservarLoteCasoDeUso.executar();

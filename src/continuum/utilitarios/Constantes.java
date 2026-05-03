@@ -21,4 +21,15 @@ public final class Constantes {
     public static final int OPCAO_SAIR_SELECAO_EMPRESAS = 0;
     
     public static final int ID_LOTE_INVALIDO = -1;
+    
+    public static final int ID_ESTADO_INVALIDO = -1;
+    
+    public static final int CODIGO_LOTE_DISPONIVEL = 0;
+    
+    public static final int CODIGO_PROJETO_INICIADO = 0;
+    
+    public static final int OPCAO_ENVIO = 1;
+    public static final int OPCAO_RETIRADA = 2;
+    
+
 }

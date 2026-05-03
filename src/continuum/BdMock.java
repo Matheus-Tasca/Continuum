@@ -1,5 +1,9 @@
 package continuum;
 
+import continuum.endereco.Bairro;
+import continuum.endereco.Cep;
+import continuum.endereco.Cidade;
+import continuum.endereco.Estado;
 import java.util.Scanner;
 import continuum.utilitarios.Constantes;
 import java.util.ArrayList;
@@ -11,11 +15,14 @@ public class BdMock {
     private Estudante estudanteBd;
     private List<Empresa> empresaBd = new ArrayList();
     private List<Lote> lotesBd = new  ArrayList();
-    //TO-DO: Decidir se os status serao um array ou n
-    private StatusLote statusLoteBd;
-    
-    Scanner sc = new Scanner(System.in);
+    private List<Projeto> projetosBd = new ArrayList();
+    private List<Cep> cepsBd = new ArrayList();
+    private List<Bairro> bairrosBd = new ArrayList();
+    private List<Cidade> cidadesBd = new ArrayList();
+    private List<Estado> estadosBd = new ArrayList();
 
+    Scanner sc = new Scanner(System.in);
+    
     public void criarDoador() {
         System.out.println("--- CADASTRO DE DOADOR ---");
         System.out.println("Nome do doador: ");
@@ -48,9 +55,14 @@ public class BdMock {
 
             System.out.println("CEP: ");
             String cep = sc.nextLine();
-
+            
             System.out.println("Número do endereço: ");
             String nrEndereco = sc.nextLine();
+
+            if(!this.pesquisarCep(cep)){
+                System.out.println("CEP nao cadastrado! Iniciando cadastro de endereco");
+                this.criarCidade();
+            }
 
             Empresa novaEmpresa = new Empresa(cnpj, nmFantasia, email, cep, nrEndereco);
             
@@ -127,6 +139,82 @@ public class BdMock {
         }while(opcaoCriacaoLote != 2);    
     }
     
+    public void criarProjeto(int idLote, String cpfEstudante){
+        Projeto novoProjeto = new Projeto(idLote, cpfEstudante);
+        projetosBd.add(novoProjeto);
+        System.out.println("Projeto " + novoProjeto.getIdProjeto()
+                + " vinculado ao estudante");
+    }
+    
+    public void criarCep(int idBairro){
+        System.out.println("Informe o cep: ");
+        String cep = sc.nextLine();
+        System.out.println("Informe o logradouro: ");
+        String logradouro = sc.nextLine();
+        Cep novoCep = new Cep(cep, logradouro, idBairro);
+        
+        this.cepsBd.add(novoCep);
+        
+        System.out.println("CEP: " + cep + " cadastrado");
+    }
+    
+    public void criarBairro(int idCidade){
+        System.out.println("Informe o nome do bairro: ");
+        String nomeBairro = sc.nextLine();
+        Bairro novoBairro = new Bairro(nomeBairro, idCidade);;
+        this.criarCep(novoBairro.getIdBairro());
+    }
+    
+    public void criarCidade(){
+        System.out.println("Informe a sigla do estado da cidade: ");
+        String siglaEstado = sc.nextLine();
+        System.out.println("sigla: " + siglaEstado);
+        int idEstado = getEstadoComSigla(siglaEstado);
+        
+        if(idEstado == Constantes.ID_ESTADO_INVALIDO){
+            System.out.println("Estado invalido!");
+            return;
+        }
+        
+        System.out.println("Informe o nome da cidade: ");
+        String nomeCidade = sc.nextLine();
+        Cidade novaCidade = new Cidade(nomeCidade,idEstado);
+        cidadesBd.add(novaCidade);
+        System.out.println("Cidade cadastrada! ");
+        this.criarBairro(novaCidade.getIdCidade());
+        
+    }
+    
+    public void criarEstados(){
+        estadosBd.add(new Estado("Acre", "AC"));
+        estadosBd.add(new Estado("Alagoas", "AL"));
+        estadosBd.add(new Estado("Amapa", "AP"));
+        estadosBd.add(new Estado("Amazonas", "AM"));
+        estadosBd.add(new Estado("Bahia", "BA"));
+        estadosBd.add(new Estado("Ceara", "CE"));
+        estadosBd.add(new Estado("Distrito Federal", "DF"));
+        estadosBd.add(new Estado("Espirito Santo", "ES"));
+        estadosBd.add(new Estado("Goias", "GO"));
+        estadosBd.add(new Estado("Maranhao", "MA"));
+        estadosBd.add(new Estado("Mato Grosso", "MT"));
+        estadosBd.add(new Estado("Mato Grosso do Sul", "MS"));
+        estadosBd.add(new Estado("Minas Gerais", "MG"));
+        estadosBd.add(new Estado("Para", "PA"));
+        estadosBd.add(new Estado("Paraiba", "PB"));
+        estadosBd.add(new Estado("Parana", "PR"));
+        estadosBd.add(new Estado("Pernambuco", "PE"));
+        estadosBd.add(new Estado("Piaui", "PI"));
+        estadosBd.add(new Estado("Rio de Janeiro", "RJ"));
+        estadosBd.add(new Estado("Rio Grande do Norte", "RN"));
+        estadosBd.add(new Estado("Rio Grande do Sul", "RS"));
+        estadosBd.add(new Estado("Rondonia", "RO"));
+        estadosBd.add(new Estado("Roraima", "RR"));
+        estadosBd.add(new Estado("Santa Catarina", "SC"));
+        estadosBd.add(new Estado("Sao Paulo", "SP"));
+        estadosBd.add(new Estado("Sergipe", "SE"));
+        estadosBd.add(new Estado("Tocantins", "TO"));
+    }
+    
     public void getEmpresasCadastradas() {
         System.out.println("Empresas cadastradas: ");
         for (Empresa empresaAtual : empresaBd){
@@ -165,8 +253,8 @@ public class BdMock {
                 loteAtual.getIdEmpresa() == idEmpresa
             ){
                 System.out.println("--------------------");
+                System.out.println("ID do lote: " + loteAtual.getIdLote());
                 System.out.println("Numero do lote: " + loteAtual.getNumLote());
-                System.out.println("Empresa responsavel " + loteAtual.getIdEmpresa());
                 System.out.println("Peso do lote: " + loteAtual.getPesoLote());
                 System.out.println("Itens do lote: " + loteAtual.getDescItens());
             }
@@ -179,5 +267,22 @@ public class BdMock {
         }
         
         return Constantes.ID_LOTE_INVALIDO;
+    }
+    
+    public boolean pesquisarCep(String cepPesquisado){
+        for(Cep cepAtual : cepsBd){
+           if(cepAtual.getCep().equals(cepPesquisado)) return true;
+        }
+        
+        return false;
+    }
+    
+    public int getEstadoComSigla(String siglaEstado){
+        for(Estado estadoAtual : estadosBd){
+            estadoAtual.obterNomeCompleto();
+            if(estadoAtual.getSgEstado().trim().equalsIgnoreCase(siglaEstado.trim()))
+                return estadoAtual.getIdEstado();
+        }
+        return Constantes.ID_ESTADO_INVALIDO;
     }
 }

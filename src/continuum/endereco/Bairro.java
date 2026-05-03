@@ -1,12 +1,14 @@
 package continuum.endereco;
         
 public class Bairro {
+    private static int contadorId = 0;
     private int idBairro;
     private String nmBairro;
     private int idCidade;
 
-    public Bairro(int idBairro, String nmBairro, int idCidade) {
-        this.idBairro = idBairro;
+    public Bairro(String nmBairro, int idCidade) {
+        contadorId++;
+        this.idBairro = contadorId;
         this.nmBairro = nmBairro;
         this.idCidade = idCidade;
     }

@@ -10,19 +10,22 @@ public class ReservarLote {
     BdMock bd;
     SelecionarEmpresa selecionarEmpresaCasoDeUso;
     Scanner sc = new Scanner(System.in);
+    String cpfEstudante;
     
     public ReservarLote(
         boolean estudanteLogado,
         BdMock bd,
-        SelecionarEmpresa selecionarEmpresa
+        SelecionarEmpresa selecionarEmpresa,
+        String cpfEstudante
     ){
         this.estudanteLogado = estudanteLogado;
         this.bd = bd;
         this.selecionarEmpresaCasoDeUso = selecionarEmpresa;
+        this.cpfEstudante=cpfEstudante;
     }
     
     public void executar(){
-        int idLoteSelecionado;
+        int idLoteSelecionado, opcaoEnvio;
         
         if(!estudanteLogado){
             System.out.println("O estudante deve estar logado!");
@@ -46,6 +49,22 @@ public class ReservarLote {
             System.out.println("ID invalido!");
         }while(bd.getLoteComId(idLoteSelecionado) != Constantes.ID_LOTE_INVALIDO);
         
+        System.out.println("Lote selecionado: ID " + idLoteSelecionado);
         
+        bd.criarProjeto(idLoteSelecionado,cpfEstudante);
+        
+        System.out.println("O lote sera 1 - ENVIADO ou 2 - RETIRADO ? "
+                + "(Digite o numero correspondente)");
+        
+        opcaoEnvio = sc.nextInt();
+
+        switch(opcaoEnvio){
+            case(Constantes.OPCAO_RETIRADA)->{
+                System.out.println("");
+            }
+            case(Constantes.OPCAO_ENVIO)->{
+                
+            }
+        }
     }
 }
