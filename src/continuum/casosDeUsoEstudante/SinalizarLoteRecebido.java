@@ -19,12 +19,14 @@ public class SinalizarLoteRecebido {
         }
         
         Projeto projetoEstudante = bd.getProjetoComCpf(cpfEstudante);
-        Lote loteProjeto = bd.getLoteComId(projetoEstudante.getIdLote());
+        
 
         if(projetoEstudante == null){
             System.out.println("Estudante nao tem projeto ativo! ");
             return;
         }
+        
+        Lote loteProjeto = bd.getLoteComId(projetoEstudante.getIdLote());
         
         projetoEstudante.setCdStatusProjeto(Constantes.CODIGO_STATUS_PROJETO_EM_PROCESSO);
         loteProjeto.setCdStatusLote(Constantes.CODIGO_STATUS_LOTE_EM_PREPARO);
