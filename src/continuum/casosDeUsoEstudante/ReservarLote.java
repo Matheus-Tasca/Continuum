@@ -9,6 +9,7 @@ public class ReservarLote {
     boolean estudanteLogado;
     BdMock bd;
     SelecionarEmpresa selecionarEmpresaCasoDeUso;
+    AssinarTermoResponsabilidade assinarTermoResponsabilidade;
     Scanner sc = new Scanner(System.in);
     String cpfEstudante;
     String cepEstudante;
@@ -18,13 +19,15 @@ public class ReservarLote {
         BdMock bd,
         SelecionarEmpresa selecionarEmpresa,
         String cpfEstudante,
-        String cepEstudante
+        String cepEstudante,
+        AssinarTermoResponsabilidade assinarTermoResponsabilidade
     ){
         this.estudanteLogado = estudanteLogado;
         this.bd = bd;
         this.selecionarEmpresaCasoDeUso = selecionarEmpresa;
         this.cpfEstudante=cpfEstudante;
         this.cepEstudante=cepEstudante;
+        this.assinarTermoResponsabilidade = assinarTermoResponsabilidade;
     }
     
     public void executar(){
@@ -54,25 +57,27 @@ public class ReservarLote {
         
         System.out.println("Lote selecionado: ID " + idLoteSelecionado);
         
-        bd.criarProjeto(idLoteSelecionado,cpfEstudante);
+        if(this.assinarTermoResponsabilidade.executar()){
+            bd.criarProjeto(idLoteSelecionado,cpfEstudante);
         
-        System.out.println("O lote sera 1 - ENVIADO ou 2 - RETIRADO ? "
-                + "(Digite o numero correspondente)");
-        
-        opcaoEnvio = sc.nextInt();
+            System.out.println("O lote sera 1 - ENVIADO ou 2 - RETIRADO ? "
+                    + "(Digite o numero correspondente)");
 
-        switch(opcaoEnvio){
-            case(Constantes.OPCAO_RETIRADA)->{
-                System.out.println("Endereco para realizar a retirada: ");
-                bd.getEnderecoCompleto(bd.getEmpresaComId(idEmpresaSelecionada).getCep());
-                bd.getLoteComId(idLoteSelecionado).setCdStatusLote(Constantes.CODIGO_STATUS_LOTE_RESERVADO);
-                System.out.println("Lote reservado!");
-            }
-            case(Constantes.OPCAO_ENVIO)->{
-                System.out.println("O lote sera enviado para o endereco: ");
-                bd.getEnderecoCompleto(cepEstudante);
-                bd.getLoteComId(idLoteSelecionado).setCdStatusLote(Constantes.CODIGO_STATUS_LOTE_AGUARDANDO_ENVIO);
-                System.out.println("Lote reservado e aguardando envio da loja!");
+            opcaoEnvio = sc.nextInt();
+
+            switch(opcaoEnvio){
+                case(Constantes.OPCAO_RETIRADA)->{
+                    System.out.println("Endereco para realizar a retirada: ");
+                    bd.getEnderecoCompleto(bd.getEmpresaComId(idEmpresaSelecionada).getCep());
+                    bd.getLoteComId(idLoteSelecionado).setCdStatusLote(Constantes.CODIGO_STATUS_LOTE_RESERVADO);
+                    System.out.println("Lote reservado e aguardando retirada do estilista!");
+                }
+                case(Constantes.OPCAO_ENVIO)->{
+                    System.out.println("O lote sera enviado para o endereco: ");
+                    bd.getEnderecoCompleto(cepEstudante);
+                    bd.getLoteComId(idLoteSelecionado).setCdStatusLote(Constantes.CODIGO_STATUS_LOTE_AGUARDANDO_ENVIO);
+                    System.out.println("Lote reservado e aguardando envio da loja!");
+                }
             }
         }
     }
