@@ -15,6 +15,9 @@ public final class Constantes {
     public static final int OPCAO_ESTUDANTE = 3;
     public static final int OPCAO_ESTUDANTE_LOGAR = 1;
     public static final int OPCAO_ESTUDANTE_RESERVAR_LOTE = 2;
+    public static final int OPCAO_ESTUDANTE_SINALIZAR_LOTE_RECEBIDO = 3;
+    public static final int OPCAO_ESTUDANTE_ABRIR_RECLAMACAO = 4;
+    public static final int OPCAO_ESTUDANTE_FINALIZAR_PROJETO = 5;
     
     public static final int OPCAO_SAIR = 0;
      
@@ -32,11 +35,9 @@ public final class Constantes {
     public static final int CODIGO_STATUS_LOTE_DISPONIVEL = 0;
     public static final int CODIGO_STATUS_LOTE_EM_PREPARO = 1;
     public static final int CODIGO_STATUS_LOTE_TRANSPORTE_ESTILISTA = 2;
-    public static final int CODIGO_STATUS_LOTE_RECEBIDO_ESTILISTA = 3;
-    public static final int CODIGO_STATUS_LOTE_TRANSPORTE_LOJA = 4;
-    public static final int CODIGO_STATUS_LOTE_RECEBIDO_LOJA = 5;
-    public static final int CODIGO_STATUS_LOTE_RESERVADO = 6;
-    public static final int CODIGO_STATUS_LOTE_AGUARDANDO_ENVIO = 7;
+    public static final int CODIGO_STATUS_LOTE_TRANSPORTE_LOJA = 3;
+    public static final int CODIGO_STATUS_LOTE_RESERVADO = 4;
+    public static final int CODIGO_STATUS_LOTE_AGUARDANDO_ENVIO = 5;
     
     public static final int CODIGO_STATUS_PROJETO_INICIADO = 0;
     public static final int CODIGO_STATUS_PROJETO_EM_PROCESSO = 1;

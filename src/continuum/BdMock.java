@@ -38,10 +38,13 @@ public class BdMock {
         String cep = sc.nextLine();
         System.out.println("numero de endereco: ");
         String numeroEndereco = sc.nextLine();
-        System.out.println("Senha: ");
-        String senha = sc.nextLine();
-        
-        doadorBd = new Doador(cpf, cep, nome, telefone, numeroEndereco, senha, senha);
+
+        if(!this.pesquisarCep(cep)){
+            System.out.println("CEP nao cadastrado! Iniciando cadastro de endereco");
+            this.criarCidade();
+        }
+
+        doadorBd = new Doador(cpf, cep, nome, telefone, numeroEndereco, senha);
 
     }
 
@@ -385,5 +388,13 @@ public class BdMock {
         }
     }
     
-
+    public Projeto getProjetoComCpf(String cpfEstudante){
+        for(Projeto projetoAtual : projetosBd){
+            if(projetoAtual.getCpfEstudante().trim().equalsIgnoreCase(cpfEstudante)){
+                return projetoAtual;
+            }
+        }
+        
+        return null;
+    }
 }

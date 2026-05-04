@@ -3,9 +3,11 @@ package continuum;
 
 import continuum.casosDeUsoDoador.LogarDoador;
 import continuum.casosDeUsoDoador.VisualizarDoacoes;
+import continuum.casosDeUsoEstudante.AssinarTermoResponsabilidade;
 import continuum.casosDeUsoEstudante.LogarEstudante;
 import continuum.casosDeUsoEstudante.ReservarLote;
 import continuum.casosDeUsoEstudante.SelecionarEmpresa;
+import continuum.casosDeUsoEstudante.SinalizarLoteRecebido;
 import continuum.utilitarios.Constantes;
 import java.util.Scanner;
 
@@ -53,13 +55,15 @@ public class Continuum {
                             }
                             case Constantes.OPCAO_DOADOR_VISUALIZAR_DESCONTOS -> {
                                 
-                        }
+                            }
+                            case Constantes.OPCAO_SAIR -> {
+                                System.out.println("Saindo...");
+                            }
                             default -> {
-                                if(opcao>0)
-                                    System.out.println("Opcao invalida");
+                                System.out.println("Opcao invalida");
                             }    
                     }
-                 } while (opcaoDoador !=0);
+                 } while (opcaoDoador != Constantes.OPCAO_SAIR);
                 }
                 case Constantes.OPCAO_EMPRESA -> {
 
@@ -71,6 +75,9 @@ public class Continuum {
                         System.out.println("------MENU PARA ESCOLHA (ESTUDANTE)------");
                         System.out.println("1 - Logar");
                         System.out.println("2 - Reservar Lote");
+                        System.out.println("3 - Sinalizar lote recebido");
+                        System.out.println("4 - Abrir reclamacao de entrega/retirada");
+                        System.out.println("5 - Descrever processo criativo e finalizar projeto");
                         System.out.println("0 - Sair");
                         opcaoEstudante = sc.nextInt();
 
@@ -81,23 +88,39 @@ public class Continuum {
                             }
                             case Constantes.OPCAO_ESTUDANTE_RESERVAR_LOTE ->{
                                 SelecionarEmpresa selecionarEmpresaCasoDeUso = new SelecionarEmpresa(estudanteLogado, bd);
+                                AssinarTermoResponsabilidade assinarTermoResponsabilidade = new AssinarTermoResponsabilidade(bd.getEstudanteBd().getCpf());
+                                
                                 bd.criarLote(1);
+                                
                                 ReservarLote reservarLoteCasoDeUso = new ReservarLote(
                                         estudanteLogado,
                                         bd,
                                         selecionarEmpresaCasoDeUso,
                                         bd.getEstudanteBd().getCpf(),
-                                        bd.getEstudanteBd().getCep()
+                                        bd.getEstudanteBd().getCep(),
+                                        assinarTermoResponsabilidade
                                 );
                                 
                                 reservarLoteCasoDeUso.executar();
                             }
+                            case Constantes.OPCAO_ESTUDANTE_SINALIZAR_LOTE_RECEBIDO ->{
+                                SinalizarLoteRecebido sinalizarLoterecebidoCasoDeUso = new SinalizarLoteRecebido(bd);
+                                sinalizarLoterecebidoCasoDeUso.executar(bd.getEstudanteBd().getCpf());
+                            }
+                            case Constantes.OPCAO_ESTUDANTE_ABRIR_RECLAMACAO->{
+//                                Abrir reclamacao = um mock de notificacao
+                            }
+                            case Constantes.OPCAO_ESTUDANTE_FINALIZAR_PROJETO->{
+//                                Descrever processo criativo, anexar no projeto e mudar status para reenvio pra loja
+                            }
+                            case Constantes.OPCAO_SAIR -> {
+                                System.out.println("Saindo...");
+                            }
                             default -> {
-                                if(opcao>0)
-                                    System.out.println("Opcao invalida!");
+                                System.out.println("Opcao invalida!");
                             }
                         }
-                    }while(opcaoEstudante != 0);
+                    }while(opcaoEstudante != Constantes.OPCAO_SAIR);
                  }
                 case Constantes.OPCAO_SAIR -> {
                     System.out.println("Saindo...");
