@@ -4,6 +4,7 @@ package continuum;
 import continuum.casosDeUsoDoador.LogarDoador;
 import continuum.casosDeUsoDoador.VisualizarDoacoes;
 import continuum.casosDeUsoEstudante.AssinarTermoResponsabilidade;
+import continuum.casosDeUsoEstudante.FinalizarProjeto;
 import continuum.casosDeUsoEstudante.LogarEstudante;
 import continuum.casosDeUsoEstudante.ReservarLote;
 import continuum.casosDeUsoEstudante.SelecionarEmpresa;
@@ -76,8 +77,7 @@ public class Continuum {
                         System.out.println("1 - Logar");
                         System.out.println("2 - Reservar Lote");
                         System.out.println("3 - Sinalizar lote recebido");
-                        System.out.println("4 - Abrir reclamacao de entrega/retirada");
-                        System.out.println("5 - Descrever processo criativo e finalizar projeto");
+                        System.out.println("4 - Descrever processo criativo e finalizar projeto");
                         System.out.println("0 - Sair");
                         opcaoEstudante = sc.nextInt();
 
@@ -107,11 +107,9 @@ public class Continuum {
                                 SinalizarLoteRecebido sinalizarLoterecebidoCasoDeUso = new SinalizarLoteRecebido(bd);
                                 sinalizarLoterecebidoCasoDeUso.executar(bd.getEstudanteBd().getCpf());
                             }
-                            case Constantes.OPCAO_ESTUDANTE_ABRIR_RECLAMACAO->{
-//                                Abrir reclamacao = um mock de notificacao
-                            }
                             case Constantes.OPCAO_ESTUDANTE_FINALIZAR_PROJETO->{
-//                                Descrever processo criativo, anexar no projeto e mudar status para reenvio pra loja
+                                FinalizarProjeto finalizarProjetoCasoDeUso = new FinalizarProjeto(bd);
+                                finalizarProjetoCasoDeUso.executar(bd.getEstudanteBd().getCpf());
                             }
                             case Constantes.OPCAO_SAIR -> {
                                 System.out.println("Saindo...");

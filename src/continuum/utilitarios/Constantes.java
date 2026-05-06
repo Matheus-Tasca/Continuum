@@ -16,8 +16,7 @@ public final class Constantes {
     public static final int OPCAO_ESTUDANTE_LOGAR = 1;
     public static final int OPCAO_ESTUDANTE_RESERVAR_LOTE = 2;
     public static final int OPCAO_ESTUDANTE_SINALIZAR_LOTE_RECEBIDO = 3;
-    public static final int OPCAO_ESTUDANTE_ABRIR_RECLAMACAO = 4;
-    public static final int OPCAO_ESTUDANTE_FINALIZAR_PROJETO = 5;
+    public static final int OPCAO_ESTUDANTE_FINALIZAR_PROJETO = 4;
     
     public static final int OPCAO_SAIR = 0;
      

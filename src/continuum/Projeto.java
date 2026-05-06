@@ -11,7 +11,8 @@ public class Projeto {
     private String cpfEstudante;
     private int cdStatusProjeto;
     private Date dataEncerramento;
-
+    private String processoCriativo;
+    
     public Projeto(int idLote, String cpfEstudante) {
         contadorId++;
         this.idProjeto = contadorId;
@@ -32,6 +33,10 @@ public class Projeto {
     public int getCdStatusProjeto() { return cdStatusProjeto; }
     public void setCdStatusProjeto(int cdStatusProjeto) { this.cdStatusProjeto = cdStatusProjeto; }
 
+    public String getProcessoCriativo() {return processoCriativo;}
+
+    public void setProcessoCriativo(String processoCriativo) {this.processoCriativo = processoCriativo;}
+    
     public String getDataEncerramento() {
         SimpleDateFormat formatador = new SimpleDateFormat("dd-MM-yyyy");
         return formatador.format(this.dataEncerramento);
@@ -39,8 +44,9 @@ public class Projeto {
 
     public void setDataEncerramento(Date dataEncerramento) {this.dataEncerramento = dataEncerramento;}
     
-    public void finalizarProjeto() {
-        this.cdStatusProjeto = 3;
+    public void finalizarProjeto(String processoCriativo) {
+        this.cdStatusProjeto = Constantes.CODIGO_STATUS_PROJETO_FINALIZADO;
         this.dataEncerramento = new Date();
+        this.processoCriativo = processoCriativo;
     }
 }
