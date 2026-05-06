@@ -390,7 +390,7 @@ public class BdMock {
     
     public Projeto getProjetoComCpf(String cpfEstudante){
         for(Projeto projetoAtual : projetosBd){
-            if(projetoAtual.getCpfEstudante().trim().equalsIgnoreCase(cpfEstudante)){
+            if(projetoAtual.getCpfEstudante().trim().equalsIgnoreCase(cpfEstudante) && projetoAtual.getCdStatusProjeto() != Constantes.CODIGO_STATUS_PROJETO_FINALIZADO){
                 return projetoAtual;
             }
         }

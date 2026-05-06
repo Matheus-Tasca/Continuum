@@ -20,7 +20,6 @@ public class SinalizarLoteRecebido {
         
         Projeto projetoEstudante = bd.getProjetoComCpf(cpfEstudante);
         
-
         if(projetoEstudante == null){
             System.out.println("Estudante nao tem projeto ativo! ");
             return;
