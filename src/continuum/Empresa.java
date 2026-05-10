@@ -10,7 +10,9 @@ public class Empresa {
     private String cep;
     private boolean situacaoCadastral;
     private String nrEndereco;
-    
+    private String senha;
+
+    private boolean logado;
     
     public Empresa(){
         this.idEmpresa = -1;
@@ -25,6 +27,7 @@ public class Empresa {
         this.cep = cep;
         this.situacaoCadastral = true;
         this.nrEndereco = nrEndereco;
+        this.logado = false;
     }
 
     public String getCnpj() { return cnpj; }
@@ -48,6 +51,22 @@ public class Empresa {
     public String getNrEndereco() { return nrEndereco; }
     public void setNrEndereco(String nrEndereco) { this.nrEndereco = nrEndereco; }
     
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+    
+    public boolean isLogado() {
+        return logado;
+    }
+
+    public void setLogado(boolean logado) {
+        this.logado = logado;
+    }
+
     public void verificarAtividade(){
         if(situacaoCadastral){
             System.out.println("Empresa apta para atuuar");

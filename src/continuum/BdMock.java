@@ -242,6 +242,7 @@ public class BdMock {
                 System.out.println("ID da empresa: " + empresaAtual.getIdEmpresa());
                 System.out.println("Nome: " + empresaAtual.getNmFantasia());
                 System.out.println("CEP: " + empresaAtual.getCep());
+                System.out.println("CNPJ: " + empresaAtual.getCnpj());
             }
         }
     }
@@ -397,4 +398,59 @@ public class BdMock {
         
         return null;
     }
+
+    public void getDescontosNaoUtilizados() {
+        System.out.println("--- Cupons Disponiveis ---");
+
+        for (Desconto d : this.getDoadorBd().getCupons()) {
+            if (!d.getUtilizado()) {
+                System.out.println("ID: " + d.getIdDesconto());
+                System.out.println("Codigo: " + d.getCdDesconto());
+                System.out.println("CPF Doador: " + d.getCpfDoador());
+                System.out.println("Porcentagem: " + d.getPorcentagem() + "%");
+                System.out.println("--------------------------");   
+            }
+        }
+    }
+
+    public Empresa verificarCadastro(String cnpj, String senha) {
+        for (Empresa empresaAtual : empresaBd) {
+            if(empresaAtual.getSituacaoCadastral() && 
+                    empresaAtual.getCnpj().trim().equalsIgnoreCase(cnpj) && 
+                    empresaAtual.getSenha().trim().equalsIgnoreCase(senha) )
+            {
+                return empresaAtual;
+            }
+        } 
+        return null;
+    }
+    
+   public void getStatusLoteTransporteLoja(int idEmpresa){
+       for(Lote loteAtual : lotesBd ) {
+          if (loteAtual.getIdEmpresa()==idEmpresa) {
+              System.out.println("Id do Lote:" + loteAtual.getIdLote());
+              System.out.println("Descricao: " + loteAtual.getDescItens());
+          }
+       }
+    }
+   
+   public void getLotesBaseStatus(int status, int idEmpresa){
+        for(Lote loteAtual : lotesBd ) {
+          if (loteAtual.getIdEmpresa()==idEmpresa && loteAtual.getCdStatusLote()==status) {
+              System.out.println("Id do Lote:" + loteAtual.getIdLote());
+              System.out.println("Descricao: " + loteAtual.getDescItens());
+          }
+       }
+   }
+   
+   public void contabilizarLoteComStatus(int status, int idEmpresa){
+       int lotesComStatus = 0; 
+       for(Lote loteAtual : lotesBd ) {
+            if (loteAtual.getIdEmpresa()==idEmpresa && loteAtual.getCdStatusLote()==status) {
+                lotesComStatus++;
+            }
+         }
+       
+       System.out.println("A empresa possui: " + lotesComStatus);
+   }
 }

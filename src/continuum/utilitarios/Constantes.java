@@ -11,6 +11,11 @@ public final class Constantes {
     public static final int OPCAO_DOADOR_VISUALIZAR_DESCONTOS = 3;
     
     public static final int OPCAO_EMPRESA = 2;
+    public static final int OPCAO_EMPRESA_LOGAR = 1;
+    public static final int OPCAO_EMPRESA_CADASTRAR_LOTE = 2;
+    public static final int OPCAO_EMPRESA_CONCLUIR_PROJETO = 3;
+    public static final int OPCAO_EMPRESA_VISUALIZAR_DASHBOARD = 4;
+    public static final int OPCAO_EMPRESA_CONFIRMAR_RETIRADA_ENVIO_LOTE = 5;
     
     public static final int OPCAO_ESTUDANTE = 3;
     public static final int OPCAO_ESTUDANTE_LOGAR = 1;
@@ -37,9 +42,9 @@ public final class Constantes {
     public static final int CODIGO_STATUS_LOTE_TRANSPORTE_LOJA = 3;
     public static final int CODIGO_STATUS_LOTE_RESERVADO = 4;
     public static final int CODIGO_STATUS_LOTE_AGUARDANDO_ENVIO = 5;
+    public static final int CODIGO_STATUS_LOTE_ENTREGUE_LOJA = 6;
     
     public static final int CODIGO_STATUS_PROJETO_INICIADO = 0;
     public static final int CODIGO_STATUS_PROJETO_EM_PROCESSO = 1;
-    public static final int CODIGO_STATUS_PROJETO_RECLAMACAO_ABERTA = 2;
     public static final int CODIGO_STATUS_PROJETO_FINALIZADO = 3;
 }
