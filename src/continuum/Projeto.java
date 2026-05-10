@@ -44,9 +44,8 @@ public class Projeto {
 
     public void setDataEncerramento(Date dataEncerramento) {this.dataEncerramento = dataEncerramento;}
     
-    public void finalizarProjeto(String processoCriativo) {
+    public void finalizarProjeto() {
         this.cdStatusProjeto = Constantes.CODIGO_STATUS_PROJETO_FINALIZADO;
         this.dataEncerramento = new Date();
-        this.processoCriativo = processoCriativo;
     }
 }
