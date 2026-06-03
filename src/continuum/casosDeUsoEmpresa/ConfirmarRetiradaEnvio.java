@@ -25,13 +25,13 @@ public class ConfirmarRetiradaEnvio {
         Lote loteSelecionado = bd.getLoteComId(idLote);
         
         if(loteSelecionado.getCdStatusLote() == Constantes.CODIGO_STATUS_LOTE_AGUARDANDO_ENVIO){
-            loteSelecionado.setCdStatusLote(Constantes.CODIGO_STATUS_LOTE_TRANSPORTE_ESTILISTA);
+            loteSelecionado.setCdStatusLote(Constantes.CODIGO_STATUS_LOTE_TRANSPORTE);
             System.out.println("Lote enviado para o estilista!");
             return;
         }
         
         if(loteSelecionado.getCdStatusLote() == Constantes.CODIGO_STATUS_LOTE_RESERVADO){
-            loteSelecionado.setCdStatusLote(Constantes.CODIGO_STATUS_LOTE_EM_PREPARO);
+            loteSelecionado.setCdStatusLote(Constantes.CODIGO_STATUS_LOTE_ENTREGUE);
             System.out.println("Retirada do lote confirmada!");
             return;
         }

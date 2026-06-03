@@ -18,8 +18,8 @@ import continuum.utilitarios.Constantes;
 import java.util.Scanner;
 
 public class Continuum {
-     public static void main(String[] args) {   
-       
+     public static void main(String[] args) {
+         
         Scanner sc = new Scanner(System.in);
         int opcao;
         System.out.println("----------- Banco de dados -----------");
@@ -32,7 +32,8 @@ public class Continuum {
         bd.criarEstudante();
 
         do{
-            System.out.println("------MENU PARA ESCOLHA------");
+            System.out.println("------CONTINUUM------");
+            System.out.println("--MENU PARA ESCOLHA--");
             System.out.println("1 - Doador");
             System.out.println("2 - Empresa");
             System.out.println("3 - Estudante de moda");
@@ -48,6 +49,8 @@ public class Continuum {
                         System.out.println("1 - Logar");
                         System.out.println("2 - Visualizar doacoes");
                         System.out.println("3 - Visualizar descontos");
+                        System.out.println("0 - Sair");
+
                         opcaoDoador = sc.nextInt();
                         
                         switch(opcaoDoador) {
@@ -56,11 +59,11 @@ public class Continuum {
                                 doadorLogado = logarDoador.executar();
                             }
                             case Constantes.OPCAO_DOADOR_VISUALIZAR_DOACAO -> {
-                                VisualizarDoacoes visualizarDoacao =  new VisualizarDoacoes(bd.getDoadorBd());
+                                VisualizarDoacoes visualizarDoacao =  new VisualizarDoacoes(bd.getDoadorBd(), doadorLogado);
                                 visualizarDoacao.executar();
                             }
                             case Constantes.OPCAO_DOADOR_VISUALIZAR_DESCONTOS -> {
-                                VisualizarDescontos visualizarDescontoCasoDeUso = new VisualizarDescontos(bd);
+                                VisualizarDescontos visualizarDescontoCasoDeUso = new VisualizarDescontos(bd, doadorLogado);
                                 visualizarDescontoCasoDeUso.executar();
                             }
                             case Constantes.OPCAO_SAIR -> {
@@ -83,53 +86,44 @@ public class Continuum {
                         System.out.println("3 - Concluir projeto");
                         System.out.println("4 - Visualizar dashboard");
                         System.out.println("5 - Confirmar retirada");
+                        System.out.println("0 - Sair");
                         opcaoEmpresa = sc.nextInt();
                         
                         switch(opcaoEmpresa) {
                             case Constantes.OPCAO_EMPRESA_LOGAR ->{
                                 LogarEmpresa logarEmpresa = new  LogarEmpresa(bd);
                                 empresaLogada = logarEmpresa.executar();
-                                
-                                if(empresaLogada==null) {
-                                    System.out.println("Login invalido! Tente novamente.");
-                                    return ;
-                                } 
-                              
                             }
                             case Constantes.OPCAO_EMPRESA_CADASTRAR_LOTE -> {
                                 if(empresaLogada==null) {
                                     System.out.println("Empresa deve estar logada!");
-                                    return ;
-                                } 
-                                bd.criarLote(empresaLogada.getIdEmpresa());
+                                }else{
+                                    bd.criarLote(empresaLogada.getIdEmpresa());
+                                }
                             }
                             case Constantes.OPCAO_EMPRESA_CONCLUIR_PROJETO -> {
                                 if(empresaLogada==null) {
                                     System.out.println("Empresa deve estar logada!");
-                                    return;
-                                }
-                                
-                                ConcluirProjeto concluirProjetoCasoDeUso = new ConcluirProjeto(bd);
-                                concluirProjetoCasoDeUso.executar(empresaLogada.getIdEmpresa());
-                              
+                                }else{
+                                    ConcluirProjeto concluirProjetoCasoDeUso = new ConcluirProjeto(bd);
+                                    concluirProjetoCasoDeUso.executar(empresaLogada.getIdEmpresa());
+                                }                                
                             }
                             case Constantes.OPCAO_EMPRESA_VISUALIZAR_DASHBOARD -> {
                                 if(empresaLogada==null) {
                                     System.out.println("Empresa deve estar logada!");
-                                    return;
+                                }else{
+                                    VisualizarDashboard visualizarDashboardCasoDeUso = new VisualizarDashboard(bd);
+                                    visualizarDashboardCasoDeUso.executar(empresaLogada.getIdEmpresa());
                                 }
-                                
-                                VisualizarDashboard visualizarDashboardCasoDeUso = new VisualizarDashboard(bd);
-                                visualizarDashboardCasoDeUso.executar(empresaLogada.getIdEmpresa());
                             } 
                             case Constantes.OPCAO_EMPRESA_CONFIRMAR_RETIRADA_ENVIO_LOTE -> {
                                 if(empresaLogada==null) {
                                     System.out.println("Empresa deve estar logada!");
-                                    return;
+                                }else{
+                                    ConfirmarRetiradaEnvio confirmarRetiradaEnvioCasoDeUso = new ConfirmarRetiradaEnvio(bd);
+                                    confirmarRetiradaEnvioCasoDeUso.executar(empresaLogada.getIdEmpresa());
                                 }
-                                
-                                ConfirmarRetiradaEnvio confirmarRetiradaEnvioCasoDeUso = new ConfirmarRetiradaEnvio(bd);
-                                confirmarRetiradaEnvioCasoDeUso.executar(empresaLogada.getIdEmpresa());
                             }
                             case Constantes.OPCAO_SAIR -> {
                                 System.out.println("Saindo...");
@@ -174,11 +168,11 @@ public class Continuum {
                             }
                             case Constantes.OPCAO_ESTUDANTE_SINALIZAR_LOTE_RECEBIDO ->{
                                 SinalizarLoteRecebido sinalizarLoterecebidoCasoDeUso = new SinalizarLoteRecebido(bd);
-                                sinalizarLoterecebidoCasoDeUso.executar(bd.getEstudanteBd().getCpf());
+                                sinalizarLoterecebidoCasoDeUso.executar(bd.getEstudanteBd().getCpf(), estudanteLogado);
                             }
                             case Constantes.OPCAO_ESTUDANTE_FINALIZAR_PROJETO->{
                                 FinalizarProjeto finalizarProjetoCasoDeUso = new FinalizarProjeto(bd);
-                                finalizarProjetoCasoDeUso.executar(bd.getEstudanteBd().getCpf());
+                                finalizarProjetoCasoDeUso.executar(bd.getEstudanteBd().getCpf(), estudanteLogado);
                             }
                             case Constantes.OPCAO_SAIR -> {
                                 System.out.println("Saindo...");

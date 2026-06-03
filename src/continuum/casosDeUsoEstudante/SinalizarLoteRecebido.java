@@ -9,10 +9,16 @@ public class SinalizarLoteRecebido {
     BdMock bd;
     
     public SinalizarLoteRecebido(BdMock bd){
-        this.bd = bd;
+        this.bd = bd;;
     }
     
-    public void executar(String cpfEstudante){
+    public void executar(String cpfEstudante, boolean estudanteLogado){
+        
+        if(!estudanteLogado){
+            System.out.println("O estudante deve estar logado!");
+            return;
+        }
+        
         if(cpfEstudante.isBlank() || cpfEstudante.isEmpty()){
             System.out.println("Informe o cpf do estudante!");
             return;
@@ -28,7 +34,7 @@ public class SinalizarLoteRecebido {
         Lote loteProjeto = bd.getLoteComId(projetoEstudante.getIdLote());
         
         projetoEstudante.setCdStatusProjeto(Constantes.CODIGO_STATUS_PROJETO_EM_PROCESSO);
-        loteProjeto.setCdStatusLote(Constantes.CODIGO_STATUS_LOTE_EM_PREPARO);
+        loteProjeto.setCdStatusLote(Constantes.CODIGO_STATUS_LOTE_ENTREGUE);
         
         System.out.println("Lote recebido pelo estilista. Projeto iniciado...");
     }
