@@ -37,12 +37,10 @@ public final class Constantes {
     public static final int OPCAO_RETIRADA = 2;
     
     public static final int CODIGO_STATUS_LOTE_DISPONIVEL = 0;
-    public static final int CODIGO_STATUS_LOTE_EM_PREPARO = 1;
-    public static final int CODIGO_STATUS_LOTE_TRANSPORTE_ESTILISTA = 2;
-    public static final int CODIGO_STATUS_LOTE_TRANSPORTE_LOJA = 3;
-    public static final int CODIGO_STATUS_LOTE_RESERVADO = 4;
-    public static final int CODIGO_STATUS_LOTE_AGUARDANDO_ENVIO = 5;
-    public static final int CODIGO_STATUS_LOTE_ENTREGUE_LOJA = 6;
+    public static final int CODIGO_STATUS_LOTE_TRANSPORTE = 1;
+    public static final int CODIGO_STATUS_LOTE_RESERVADO = 2;
+    public static final int CODIGO_STATUS_LOTE_AGUARDANDO_ENVIO = 3;
+    public static final int CODIGO_STATUS_LOTE_ENTREGUE = 4;
     
     public static final int CODIGO_STATUS_PROJETO_INICIADO = 0;
     public static final int CODIGO_STATUS_PROJETO_EM_PROCESSO = 1;

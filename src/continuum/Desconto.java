@@ -12,6 +12,7 @@ public class Desconto {
         this.cdDesconto = cdDesconto;
         this.cpfDoador = cpfDoador;
         this.utilizado = false;
+        this.porcentagem = 20;
     }
 
     public int getIdDesconto() { return idDesconto; }

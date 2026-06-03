@@ -4,11 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/matheus-tasca/Documentos/estudos/faculdade/POO/Continuum/src/continuum/Continuum.java</file>
-            <file>file:/home/matheus-tasca/Documentos/estudos/faculdade/POO/Continuum/src/continuum/casosDeUsoDoador/VisualizarDescontos.java</file>
-            <file>file:/home/matheus-tasca/Documentos/estudos/faculdade/POO/Continuum/src/continuum/casosDeUsoDoador/VisualizarDoacoes.java</file>
-            <file>file:/home/matheus-tasca/Documentos/estudos/faculdade/POO/Continuum/src/continuum/Lote.java</file>
+            <file>file:/home/matheus-tasca/Documentos/estudos/faculdade/POO/Continuum/src/continuum/casosDeUsoEstudante/FinalizarProjeto.java</file>
             <file>file:/home/matheus-tasca/Documentos/estudos/faculdade/POO/Continuum/src/continuum/casosDeUsoEmpresa/ConcluirProjeto.java</file>
-            <file>file:/home/matheus-tasca/Documentos/estudos/faculdade/POO/Continuum/src/continuum/casosDeUsoEmpresa/LogarEmpresa.java</file>
+            <file>file:/home/matheus-tasca/Documentos/estudos/faculdade/POO/Continuum/src/continuum/casosDeUsoEstudante/SinalizarLoteRecebido.java</file>
+            <file>file:/home/matheus-tasca/Documentos/estudos/faculdade/POO/Continuum/src/continuum/BdMock.java</file>
+            <file>file:/home/matheus-tasca/Documentos/estudos/faculdade/POO/Continuum/src/continuum/casosDeUsoDoador/VisualizarDescontos.java</file>
+            <file>file:/home/matheus-tasca/Documentos/estudos/faculdade/POO/Continuum/src/continuum/utilitarios/Constantes.java</file>
         </group>
     </open-files>
 </project-private>

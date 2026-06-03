@@ -13,7 +13,13 @@ public class FinalizarProjeto {
         this.bd = bd;
     }
     
-    public void executar(String cpfEstudante){
+    public void executar(String cpfEstudante, boolean estudanteLogado){
+        
+        if(!estudanteLogado){
+            System.out.println("O estudante deve estar logado!");
+            return;
+        }
+        
         if(cpfEstudante.isBlank() || cpfEstudante.isEmpty()){
             System.out.println("Informe o cpf do estudante!");
             return;
@@ -35,7 +41,7 @@ public class FinalizarProjeto {
             return;
         }
         
-        bd.getLoteComId(projetoEstudante.getIdLote()).setCdStatusLote(Constantes.CODIGO_STATUS_LOTE_TRANSPORTE_LOJA);
+        bd.getLoteComId(projetoEstudante.getIdLote()).setCdStatusLote(Constantes.CODIGO_STATUS_LOTE_TRANSPORTE);
         
         projetoEstudante.setProcessoCriativo(processoCriativo);
         projetoEstudante.finalizarProjeto();

@@ -11,23 +11,27 @@ public class Empresa {
     private boolean situacaoCadastral;
     private String nrEndereco;
     private String senha;
-
-    private boolean logado;
     
     public Empresa(){
         this.idEmpresa = -1;
     }
      
-    public Empresa(String cnpj, String nmFantasia, String email, String cep, String nrEndereco) {
-        contadorIdEmpresa++;
-        this.cnpj = cnpj;
-        this.idEmpresa = contadorIdEmpresa;
-        this.nmFantasia = nmFantasia;
-        this.email = email;
-        this.cep = cep;
-        this.situacaoCadastral = true;
-        this.nrEndereco = nrEndereco;
-        this.logado = false;
+    public Empresa(
+            String cnpj,
+            String nmFantasia,
+            String email,
+            String cep,
+            String nrEndereco,
+            String senha) {
+                contadorIdEmpresa++;
+                this.cnpj = cnpj;
+                this.idEmpresa = contadorIdEmpresa;
+                this.nmFantasia = nmFantasia;
+                this.email = email;
+                this.cep = cep;
+                this.situacaoCadastral = true;
+                this.nrEndereco = nrEndereco;
+                this.senha = senha;
     }
 
     public String getCnpj() { return cnpj; }
@@ -57,14 +61,6 @@ public class Empresa {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-    
-    public boolean isLogado() {
-        return logado;
-    }
-
-    public void setLogado(boolean logado) {
-        this.logado = logado;
     }
 
     public void verificarAtividade(){
