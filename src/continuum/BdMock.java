@@ -33,12 +33,13 @@ public class BdMock {
         if (DEBUG) {
             System.out.println("[DEBUG] Gerando dados aleatórios para Doador...");
             nome = "Doador Falso " + random.nextInt(100);
-            cpf = String.valueOf(10000000000L + random.nextLong(90000000000L));
-            senha = "senha" + random.nextInt(1000);
+            cpf = "899.298.508-80";
+            senha = "senhaDoador";
             telefone = "119" + (10000000 + random.nextInt(90000000));
             cep = "13480000";
             numeroEndereco = String.valueOf(random.nextInt(1000));
             System.out.println("Login: " + cpf + " | " + senha);
+            System.out.println("CEP cadastrado: ");
         } else {
             System.out.println("Nome do doador: ");
             nome = sc.nextLine();
@@ -55,8 +56,11 @@ public class BdMock {
         }
 
         if(!this.pesquisarCep(cep)){
-            System.out.println("CEP nao cadastrado! Iniciando cadastro de endereco");
-            this.criarCidade();
+            if(!DEBUG){
+                System.out.println("CEP nao cadastrado! Iniciando cadastro de endereco");
+            }
+            
+            this.criarCidade(cep);
         }
 
         doadorBd = new Doador(cpf, cep, nome, telefone, numeroEndereco, senha);
@@ -71,12 +75,12 @@ public class BdMock {
 
             if (DEBUG) {
                 System.out.println("[DEBUG] Gerando dados aleatórios para Empresa...");
-                cnpj = String.valueOf(10000000000000L + random.nextLong(90000000000000L));
+                cnpj = "20193696000127";
                 nmFantasia = "Empresa Fake " + random.nextInt(100);
                 email = "contato@empresa" + random.nextInt(100) + ".com";
                 cep = "13480000";
                 nrEndereco = String.valueOf(random.nextInt(1000));
-                senha = "senha" + random.nextInt(1000);
+                senha = "senhaEmpresa";
                 System.out.println("Login: " + cnpj + " | " + senha);
             } else {
                 System.out.println("CNPJ da empresa: ");
@@ -94,8 +98,11 @@ public class BdMock {
             }
             
             if(!this.pesquisarCep(cep)){
-                System.out.println("CEP nao cadastrado! Iniciando cadastro de endereco");
-                this.criarCidade();
+                if(!DEBUG){
+                    System.out.println("CEP nao cadastrado! Iniciando cadastro de endereco");
+                }
+
+                this.criarCidade(cep);
             }
 
             Empresa novaEmpresa = new Empresa(cnpj, nmFantasia, email, cep, nrEndereco, senha);
@@ -121,8 +128,8 @@ public class BdMock {
         if (DEBUG) {
             System.out.println("[DEBUG] Gerando dados aleatórios para Estudante...");
             nome = "Estudante Fake " + random.nextInt(100);
-            cpf = String.valueOf(10000000000L + random.nextLong(90000000000L));
-            senha = "senha" + random.nextInt(1000);
+            cpf = "010.251.258-27";
+            senha = "senhaEstudante";
             ra = String.valueOf(100000 + random.nextInt(900000));
             nmFaculdade = "Faculdade Federal " + random.nextInt(5);
             email = "estudante" + random.nextInt(1000) + "@faculdade.edu";
@@ -149,8 +156,11 @@ public class BdMock {
         }
         
         if(!this.pesquisarCep(cep)){
-            System.out.println("CEP nao cadastrado! Iniciando cadastro de endereco");
-            this.criarCidade();
+            if(!DEBUG){
+                System.out.println("CEP nao cadastrado! Iniciando cadastro de endereco");
+            }
+            
+            this.criarCidade(cep);
         }
         
         estudanteBd = new Estudante(cpf, nome, ra, cep, nmFaculdade, email, nrEndereco, senha);
@@ -200,48 +210,71 @@ public class BdMock {
                 + " vinculado ao estudante");
     }
     
-    public void criarCep(int idBairro){
-        System.out.println("Informe o cep: ");
-        String cep = sc.nextLine();
-        System.out.println("Informe o logradouro: ");
-        String logradouro = sc.nextLine();
-        Cep novoCep = new Cep(cep, logradouro, idBairro);
-        
+    public void criarCep(int idBairro, String cepInformado){
+        String logradouro;
+
+        if (DEBUG) {
+            System.out.println("[DEBUG] Vinculando CEP " + cepInformado + " ao endereço...");
+            logradouro = "Rua Fake " + random.nextInt(1000);
+        } else {
+            System.out.println("Cadastrando o CEP: " + cepInformado);
+            System.out.println("Informe o logradouro: ");
+            logradouro = sc.nextLine();
+        }
+
+        Cep novoCep = new Cep(cepInformado, logradouro, idBairro);
         this.cepsBd.add(novoCep);
         
-        System.out.println("CEP: " + cep + " cadastrado");
+        System.out.println("CEP: " + cepInformado + " cadastrado");
     }
     
-    public void criarBairro(int idCidade){
-        System.out.println("Informe o nome do bairro: ");
-        String nomeBairro = sc.nextLine();
-        Bairro novoBairro = new Bairro(nomeBairro, idCidade);;
+    public void criarBairro(int idCidade, String cepInformado){
+        String nomeBairro;
+
+        if (DEBUG) {
+            System.out.println("[DEBUG] Gerando bairro aleatório...");
+            nomeBairro = "Bairro Fake " + random.nextInt(100);
+        } else {
+            System.out.println("Informe o nome do bairro: ");
+            nomeBairro = sc.nextLine();
+        }
+
+        Bairro novoBairro = new Bairro(nomeBairro, idCidade);
         bairrosBd.add(novoBairro);
-        this.criarCep(novoBairro.getIdBairro());
+        
+        this.criarCep(novoBairro.getIdBairro(), cepInformado);
     }
     
-    public void criarCidade(){
+    public void criarCidade(String cepInformado){
         int idEstado;
-        do{
-            System.out.println("Informe a sigla do estado da cidade: ");
-            String siglaEstado = sc.nextLine();
-            idEstado = getEstadoComSigla(siglaEstado);
-        
-            if(idEstado != Constantes.ID_ESTADO_INVALIDO){
-                break;
-            }
+        String nomeCidade;
+
+        if (DEBUG) {
+            System.out.println("[DEBUG] Gerando cidade aleatória...");
+            idEstado = getEstadoComSigla("SP"); 
+            nomeCidade = "Araras";
+        } else {
+            do {
+                System.out.println("Informe a sigla do estado da cidade: ");
+                String siglaEstado = sc.nextLine();
+                idEstado = getEstadoComSigla(siglaEstado);
             
-            System.out.println("Estado invalido!");
-        }while(idEstado == Constantes.ID_ESTADO_INVALIDO);
-        
-        
-        System.out.println("Informe o nome da cidade: ");
-        String nomeCidade = sc.nextLine();
-        Cidade novaCidade = new Cidade(nomeCidade,idEstado);
+                if(idEstado != Constantes.ID_ESTADO_INVALIDO){
+                    break;
+                }
+                
+                System.out.println("Estado invalido!");
+            } while(idEstado == Constantes.ID_ESTADO_INVALIDO);
+            
+            System.out.println("Informe o nome da cidade: ");
+            nomeCidade = sc.nextLine();
+        }
+
+        Cidade novaCidade = new Cidade(nomeCidade, idEstado);
         cidadesBd.add(novaCidade);
         System.out.println("Cidade cadastrada! ");
-        this.criarBairro(novaCidade.getIdCidade());
-        
+
+        this.criarBairro(novaCidade.getIdCidade(), cepInformado); 
     }
     
     public void criarEstados(){
